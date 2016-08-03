@@ -3,6 +3,7 @@ package matching;
 import javaslang.Patterns;
 import javaslang.Tuple;
 import javaslang.Tuple2;
+import javaslang.Tuple3;
 import javaslang.control.Option;
 import javaslang.control.Try;
 import org.junit.Test;
@@ -92,6 +93,18 @@ public class PatternMatchingTest {
         );
 
         assertThat(s).isEqualTo("?");
+    }
+
+    @Test
+    public void tuplePatternMatching4() {
+        Tuple3<Integer, String, Double> tuple3 = Tuple.of(1, "two", 2.5);
+
+        String result = Match(tuple3).of(
+                Case(Patterns.Tuple3($(), $("two"), $()), (_1, _2, _3) -> "elements " + _1 + _2 + _3),
+                Case($(), "default")
+        );
+
+        assertThat(result).isEqualTo("elements 1two2.5");
     }
 
     @Test
